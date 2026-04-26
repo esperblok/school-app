@@ -119,3 +119,106 @@ function back(){
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Leerlingen Portaal</title>
+
+<meta name="theme-color" content="#003a8f">
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+<style>
+body { margin:0; font-family:Segoe UI; background:#f5f7fa; }
+
+.navbar{
+  background:#003a8f;color:white;padding:15px;
+}
+
+.login{
+  display:flex;justify-content:center;align-items:center;height:90vh;
+}
+
+.box{
+  background:white;padding:30px;border-radius:12px;width:300px;
+}
+
+input{width:100%;padding:10px;margin-top:10px;}
+
+button{
+  width:100%;padding:10px;margin-top:10px;
+  background:#0078d4;color:white;border:none;border-radius:8px;
+}
+
+.dashboard{padding:20px;}
+.card{background:white;padding:20px;margin:10px;border-radius:10px;}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">Leerlingen Portaal</div>
+
+<div id="login" class="login">
+  <div class="box">
+    <h3>Login</h3>
+    <input id="user" placeholder="Email">
+    <input id="pass" type="password" placeholder="Wachtwoord">
+
+    <button onclick="register()">Account maken</button>
+    <button onclick="login()">Inloggen</button>
+  </div>
+</div>
+
+<div id="dashboard" style="display:none;" class="dashboard">
+  <h2>Dashboard</h2>
+  <div class="card">📅 Rooster</div>
+  <div class="card">📊 Cijfers</div>
+  <div class="card">📧 Berichten</div>
+</div>
+
+<script>
+
+// 🔥 FIREBASE CONFIG (invullen!)
+const firebaseConfig = {
+  apiKey: "VUL_HIER_IN",
+  authDomain: "VUL_HIER_IN",
+  projectId: "VUL_HIER_IN",
+  appId: "VUL_HIER_IN"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// REGISTER
+function register(){
+  auth.createUserWithEmailAndPassword(user.value, pass.value)
+  .then(()=>alert("Account gemaakt!"))
+  .catch(e=>alert(e.message));
+}
+
+// LOGIN
+function login(){
+  auth.signInWithEmailAndPassword(user.value, pass.value)
+  .then(()=>{
+    login.style.display="none";
+    dashboard.style.display="block";
+  })
+  .catch(e=>alert(e.message));
+}
+
+// AUTO LOGIN
+auth.onAuthStateChanged(u=>{
+  if(u){
+    login.style.display="none";
+    dashboard.style.display="block";
+  }
+});
+
+</script>
+
+</body>
+</html>
