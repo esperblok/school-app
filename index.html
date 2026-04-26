@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Leerlingen Portaal</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#003a8f">
+
+<style>
+body { margin:0; font-family:Segoe UI, Arial; background:#f5f7fa; }
+
+.navbar{
+  background:#003a8f;color:white;padding:15px 25px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+
+.login-container{
+  display:flex;justify-content:center;align-items:center;height:90vh;
+}
+
+.login-box{
+  background:white;padding:30px;border-radius:12px;width:300px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+input{width:100%;padding:10px;margin-top:10px;}
+
+button{
+  width:100%;padding:10px;margin-top:15px;
+  background:#0078d4;color:white;border:none;border-radius:8px;
+}
+
+.dashboard{padding:20px;}
+
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:white;padding:25px;border-radius:12px;
+  text-align:center;cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div>Leerlingen Portaal</div>
+</div>
+
+<div id="login" class="login-container">
+  <div class="login-box">
+    <h3>Login</h3>
+    <input id="user" placeholder="Gebruiker">
+    <input id="pass" type="password" placeholder="Wachtwoord">
+    <button onclick="register()">Account maken</button>
+    <button onclick="login()">Inloggen</button>
+  </div>
+</div>
+
+<div id="dashboard" style="display:none;" class="dashboard">
+  <h2>Dashboard</h2>
+  <div class="grid">
+    <div class="card" onclick="openPage('Rooster')">📅 Rooster</div>
+    <div class="card" onclick="openPage('Cijfers')">📊 Cijfers</div>
+    <div class="card" onclick="openPage('Berichten')">📧 Berichten</div>
+  </div>
+</div>
+
+<div id="page" style="display:none;text-align:center;padding:40px;">
+  <h1 id="title"></h1>
+  <button onclick="back()">Terug</button>
+</div>
+
+<script>
+function register(){
+  let u=user.value,p=pass.value;
+  if(!u||!p){alert("Vul alles in");return;}
+  localStorage.setItem(u,p);
+  alert("Account gemaakt");
+}
+
+function login(){
+  let u=user.value,p=pass.value;
+  if(localStorage.getItem(u)==p){
+    login.style.display="none";
+    dashboard.style.display="block";
+  } else alert("Foute login");
+}
+
+function openPage(n){
+  dashboard.style.display="none";
+  page.style.display="block";
+  title.innerText=n;
+}
+
+function back(){
+  page.style.display="none";
+  dashboard.style.display="block";
+}
+</script>
+
+</body>
+</html>
